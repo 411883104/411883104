@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\test1"
+    "\\test1",
+    "\\test2"
   ],
-  "SelectedNode": "\\test1\\Split_List.cpp",
+  "SelectedNode": "\\test2\\HafumanTree.cpp",
   "PreviewInSolutionExplorer": false
 }

@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-13 13:29:10
  * @LastEditors: Outsider
- * @LastEditTime: 2021-11-15 15:13:24
+ * @LastEditTime: 2021-11-15 23:26:12
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test1\Maze.cpp
  */
@@ -111,7 +111,6 @@ void bfs(int x, int y,int end_x,int end_y)
         now=nullptr;
     }
 }
-
 void track(Node**res)
 {
     

@@ -2,9 +2,9 @@
  * @Author: Outsider
  * @Date: 2021-11-20 16:44:42
  * @LastEditors: Outsider
- * @LastEditTime: 2021-11-21 16:36:53
+ * @LastEditTime: 2021-11-28 16:22:09
  * @Description: In User Settings Edit
- * @FilePath: \DataStructureTest\test2\Traversetree.cpp
+ * @FilePath: \DataStructureTest\test2\TraverseTree.cpp
  */
 
 #include<iostream>
@@ -169,29 +169,36 @@ void pos_traverse(BinaryTree* binarytree,BinaryTree* stack)
     }
 }
 
+/**
+ * @description: 创建二叉树
+ * @param {BinaryTree*} &binarytree 二叉树头指针
+ * @param {BinaryTree*} &stack 栈头指针
+ * @param {string} s 要处理的字符串
+ * @return {*}
+ */
 void CreatBinaryTree(BinaryTree* &binarytree,BinaryTree* &stack,string s)
 {
-    binarytree=nullptr;
-    BinaryTree *n=new BinaryTree();
-    int flag=0;
-    for(int i=0;i<s.length();i++)
+    binarytree=nullptr;             //初始化二叉树头指针 
+    BinaryTree *n=new BinaryTree(); //要添加的树节点
+    int flag=0;                     //标志，1为左孩子，2为右孩子
+    for(int i=0;i<s.length();i++)   //处理每一个字符
     {
         switch (s[i])
         {
         case ')':
             pop_stack(stack);
             break;
-        case '(':
-            push_stack(stack,n);
-            flag=1;
+        case '(':                  //后面可能为左孩子或,
+            push_stack(stack,n);   //将当前节点压入栈
+            flag=1;                //标志置为左孩子标志
             break;
-        case ',':
-            flag=2;
+        case ',':                  //后面可能有右孩子或)
+            flag=2;                //标志为右孩子标志
             break;
         default:
-            n=new BinaryTree();
+            n=new BinaryTree();    //如果字符为字母则将字母加入树中
             n->data=s[i];
-            if(!binarytree)
+            if(!binarytree)        //处理为树的根节点
             {
                 binarytree=n;
             }
@@ -200,10 +207,10 @@ void CreatBinaryTree(BinaryTree* &binarytree,BinaryTree* &stack,string s)
                 switch (flag)
                 {
                 case 1:
-                    get_top(stack)->left=n;
+                    get_top(stack)->left=n;//左孩子
                     break;
                 case 2:
-                    get_top(stack)->right=n;
+                    get_top(stack)->right=n;//右孩子
                     break;
                 
                 default:
