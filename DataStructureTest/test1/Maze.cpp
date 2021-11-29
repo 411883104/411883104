@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-13 13:29:10
  * @LastEditors: Outsider
- * @LastEditTime: 2021-11-15 23:26:12
+ * @LastEditTime: 2021-11-29 14:39:10
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test1\Maze.cpp
  */
@@ -22,7 +22,7 @@ struct Node
 { //定义节点表示坐标
     int x;
     int y;
-    Node *next;
+    Node *next;  //作为队列时节点指针域
 };
 
 Node* res[c][c];
@@ -50,7 +50,7 @@ Node* &front(Queue *queue)
     return queue->head->next;
 }
 
-void pop(Queue *&queue)
+void pop(Queue *&queue)//头节点出队列
 {
     Node *d=nullptr;
     if (queue->head != queue->tail)
@@ -62,6 +62,8 @@ void pop(Queue *&queue)
         delete d;
     }
 }
+
+//判断队列是否为空
 bool empty(Queue *queue)
 {
     if (queue->head == queue->tail)
@@ -70,14 +72,22 @@ bool empty(Queue *queue)
 }
 
 Queue *queue = new Queue();
+/**
+ * @description: 广度优先搜索
+ * @param {int} x 起始点x坐标
+ * @param {int} y 起始点y坐标
+ * @param {int} end_x 终点x坐标
+ * @param {int} end_y 终点y坐标
+ * @return {*}
+ */
 void bfs(int x, int y,int end_x,int end_y)
 {
-    Node* first = new Node();
+    Node* first = new Node();//创建起始节点
     first->x = x;
     first->y = y;
     flag[first->x][first->y]=1;
 
-    Node* trck=new Node();
+    Node* trck=new Node();//记录路径节点
     trck->x=first->x;
     trck->y=first->y;
     res[first->x][first->y]=trck;
@@ -111,9 +121,15 @@ void bfs(int x, int y,int end_x,int end_y)
         now=nullptr;
     }
 }
-void track(Node**res)
+
+void track()
 {
-    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(res[i][j])
+                cout<<res[i][j]->x<<" "<<res[i][j]->y<<endl;
+        }
+    }
 }
 
 int main()
@@ -128,7 +144,7 @@ int main()
 
     if (init(queue))
     {
-        bfs(1, 1,3,3);
+        bfs(1, 1,4,4);
     }
     
     for (int i = 1; i <= n; i++)
@@ -137,5 +153,6 @@ int main()
             cout << flag[i][j] << ' ';
         cout << endl;
     }
+    track();
     system("pause");
 }

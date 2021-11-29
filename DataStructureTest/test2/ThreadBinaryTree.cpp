@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-21 16:39:27
  * @LastEditors: Outsider
- * @LastEditTime: 2021-11-27 20:13:31
+ * @LastEditTime: 2021-11-28 21:37:04
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test2\ThreadBinaryTree.cpp
  */
@@ -114,60 +114,106 @@ void CreatBinaryTree(ThreadBinaryTree* &threadbinarytree,ThreadBinaryTree* &stac
     }
 }
 
-void recursion_pre_traverse(ThreadBinaryTree* threadbinarytree)
+//递归遍历二叉树
+void recursion_med_traverse(ThreadBinaryTree* threadbinarytree)
 {
     if(!threadbinarytree)
         return;
     else
     {
-        recursion_pre_traverse(threadbinarytree->left);
+        recursion_med_traverse(threadbinarytree->left);
         cout<<threadbinarytree->data<<" ";
-        recursion_pre_traverse(threadbinarytree->right);
+        recursion_med_traverse(threadbinarytree->right);
     }
 }
 
-ThreadBinaryTree* pre=nullptr;
-void med_threadbinarytree(ThreadBinaryTree* threadbinarytree)
+
+ThreadBinaryTree* pre=nullptr;//记录刚访问过的节点
+/**
+ * @description: 中序线索化二叉树
+ * @param {ThreadBinaryTree*} threadbinarytree
+ * @return {*}
+ */
+void med_threadbinarytree(ThreadBinaryTree* &threadbinarytree)
 {
-    if(!threadbinarytree)
+    if(!threadbinarytree)//空树
         return;
     else{
-        med_threadbinarytree(threadbinarytree->left);
-        if(!threadbinarytree->left){
+        med_threadbinarytree(threadbinarytree->left);//左子树线索化
+        if(!threadbinarytree->left){//为空则建立前驱线索
             threadbinarytree->left=pre;
             threadbinarytree->ltag=1;
         }
         else
-            threadbinarytree->ltag=0;
-        if(pre&&!pre->right){
+            threadbinarytree->ltag=0;//非空指向左孩子节点
+        if(pre&&!pre->right){        //建立后继线索
             pre->right=threadbinarytree;
             pre->rtag=1;
         }
         else{
-            pre->rtag=0;
+            pre->rtag=0;      //非空则指向右孩子节点
         }
-        pre=threadbinarytree;
-        med_threadbinarytree(threadbinarytree->right);
+        pre=threadbinarytree;//记录访问过的节点
+        med_threadbinarytree(threadbinarytree->right);//线索化右子树
     }
 }
 
+/**
+ * @description:  中序线索化输出二叉树
+ * @param {ThreadBinaryTree*} head 线索二叉树头节点
+ * @return {*}
+ */
 void traversethreadtree(ThreadBinaryTree* head)
 {
-    ThreadBinaryTree* threadbinarytree=head->left;
-    if(!threadbinarytree)
+    cout<<"traversethreadtree: ";
+    ThreadBinaryTree* threadbinarytree=head->left;//根节点
+    if(!threadbinarytree)//空树
         return ;
     else{
-        while(threadbinarytree!=head){
-            while(threadbinarytree->ltag==0){
+        while(threadbinarytree!=head){//回到根节点遍历完成
+            while(threadbinarytree->ltag==0){//查找开始遍历的节点
                 threadbinarytree=threadbinarytree->left;
             }
-            cout<<threadbinarytree->data<<' ';
-            while(threadbinarytree->rtag==1&&threadbinarytree->right!=head){
+            cout<<threadbinarytree->data<<' ';//输出开始节点
+            while(threadbinarytree->rtag==1&&threadbinarytree->right!=head){//右线索遍历
                 threadbinarytree=threadbinarytree->right;
                 cout<<threadbinarytree->data<<" ";
             }
-            threadbinarytree=threadbinarytree->right;
+            threadbinarytree=threadbinarytree->right;//遍历右子树
         }
+    }
+}
+
+
+/**
+ * @description: 查找节点的前驱
+ * @param {ThreadBinaryTree*} threadbinarytree 要查找前驱的节点
+ * @return {*}
+ */
+void find_pioneer(ThreadBinaryTree* threadbinarytree){
+    if(threadbinarytree->ltag==1)//如果有前驱线索，则节点左孩子指针所指为该节点前驱
+        cout<<"pioneer: "<<threadbinarytree->left->data<<endl;
+    else{  //没有前驱线索则该节点的前驱是该节点的左子树上中序的最后一个节点。
+        threadbinarytree=threadbinarytree->left;//进入左子树查找
+        while(threadbinarytree->rtag==0)
+            threadbinarytree=threadbinarytree->right;
+        cout<<"pioneer: "<<threadbinarytree->data<<endl;
+    }
+}
+
+/**
+ * @description:  查找节点的后继
+ * @param {ThreadBinaryTree*} threadbinarytree 要查找后继的节点
+ * @return {*}
+ */
+void find_succeed(ThreadBinaryTree* threadbinarytree){
+    if(threadbinarytree->rtag==0)//如果该节点有后继线索，则节点的后继为该节点右孩子。
+        cout<<"succeed: "<<threadbinarytree->right->data<<endl;
+    else{ //如果没有后继线索，则该节点的后继为该节点右子树上中序的最后一个节点。
+        threadbinarytree=threadbinarytree->right;
+        while(threadbinarytree->ltag==0)
+            threadbinarytree=threadbinarytree->left;
+        cout<<"succeed: "<<threadbinarytree->data<<endl;
     }
 }
 
@@ -177,7 +223,8 @@ int main()
     ThreadBinaryTree* threadbinarytree=nullptr;
     ThreadBinaryTree* stack=nullptr;
     CreatBinaryTree(threadbinarytree,stack,str);
-    recursion_pre_traverse(threadbinarytree);
+    cout<<"recursion_med_traverse: ";
+    recursion_med_traverse(threadbinarytree);
     cout<<endl;
 
     //创建头节点
@@ -188,14 +235,20 @@ int main()
     if(!threadbinarytree)//空的二叉树
         head->left=head;
     else{
-        head->left=threadbinarytree;
+        head->left=threadbinarytree;//左孩子指向二叉树
         pre=head;
-        med_threadbinarytree(threadbinarytree);
-        pre->right=head;
-        pre->rtag=1;
-        head->right=pre;
+        med_threadbinarytree(threadbinarytree);//中序线索化二叉树
+        pre->right=head;//中序线索化最后节点的右指针指向头节点
+        pre->rtag=1;//中序线索化最后节点的右标记为指向后继节点
+        head->right=pre;//头指针右孩子指向中序线索化最后一个节点
     }
     traversethreadtree(head);
+    cout<<endl;
     
+    find_pioneer(threadbinarytree);//查找根节点前驱
+
+    find_succeed(threadbinarytree);//查找根节点后继
+    //find_pioneer(threadbinarytree->left);//查找threadbinarytree->left前驱
+    //find_succeed(threadbinarytree->left);//查找threadbinarytree->left后继
     system("pause");
 }

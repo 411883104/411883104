@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-20 16:44:42
  * @LastEditors: Outsider
- * @LastEditTime: 2021-11-28 16:22:09
+ * @LastEditTime: 2021-11-28 20:02:40
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test2\TraverseTree.cpp
  */
@@ -101,35 +101,36 @@ void pre_traverse(BinaryTree* binarytree,BinaryTree* &stack)
     if(!binarytree)
         return;
     else{
-        push_stack(stack,binarytree);
-        while(stack){
-            BinaryTree* top=get_top(stack);
-            pop_stack(stack);
-            cout<<top->data<<' ';
+        push_stack(stack,binarytree); //根节点入栈
+        while(stack){ //栈非空则继续读取栈顶元素
+            BinaryTree* top=get_top(stack);//获取栈顶元素
+            pop_stack(stack);//栈顶元素出栈
+            cout<<top->data<<' ';//输出栈顶元素
             if(top->right){
-                push_stack(stack,top->right);
+                push_stack(stack,top->right);//右孩子先入栈
             }
             if(top->left){
-                push_stack(stack,top->left);
+                push_stack(stack,top->left);//左孩子后入栈
             }
         }
     }
     cout<<endl;
 }
+
 //非递归中序遍历
 void med_traverse(BinaryTree* binarytree,BinaryTree* &stack)
 {
     BinaryTree* top=binarytree;
-    while(stack||top){
+    while(stack||top){  //栈或指针非空时循环
         if(top){
-            push_stack(stack,top);
-            top=top->left;
+            push_stack(stack,top); //指针非空，将节点入栈
+            top=top->left;         //继续分析该节点的左孩子
         }
-        else{
-            top=get_top(stack);
-            cout<<top->data<<' ';
-            pop_stack(stack);
-            top=top->right;
+        else{      //指针为空则到了子树的最左边
+            top=get_top(stack); 
+            cout<<top->data<<' '; //输出该节点
+            pop_stack(stack);   //出栈
+            top=top->right;     //分析该节点的右孩子
         }
     }
     cout<<endl;
@@ -139,29 +140,27 @@ void med_traverse(BinaryTree* binarytree,BinaryTree* &stack)
 void pos_traverse(BinaryTree* binarytree,BinaryTree* stack)
 {
     BinaryTree* top=binarytree;
-    BinaryTree* flag=nullptr;
+    BinaryTree* flag=nullptr;      //记录上次输出过的节点,避免重复输出一棵左子树
     if(!binarytree)
         return;
     else{
-        while(top){
+        while(top){   //将top节点的所有左下节点入栈
             push_stack(stack,top);
             top=top->left;
         }
-        while(stack){
-            if(stack){
-                top=get_top(stack);
-                pop_stack(stack);
-                if(flag==top->right||!top->right){
-                    cout<<top->data<<' ';
-                    flag=top;
-                }
-                else{
-                    push_stack(stack,top);
-                    top=top->right;
-                    while(top){
-                    push_stack(stack,top);
-                    top=top->left;
-                    }
+        while(stack){  //栈非空则还右节点要输出
+            top=get_top(stack); //从栈顶元素开始处理
+            pop_stack(stack);
+            if(flag==top->right||!top->right){
+                cout<<top->data<<' ';//上一次访问过或右孩子为空则输出当前节点的值
+                flag=top;//输出后做标记
+            }
+            else{  //如果上一次没有访问过或有右孩子则入栈
+                push_stack(stack,top);
+                top=top->right;//分析右节点
+                while(top){  //将右子树的所有坐下节点入栈
+                push_stack(stack,top);
+                top=top->left;
                 }
             }
         }
@@ -228,14 +227,19 @@ int main()
     BinaryTree* binarytree=nullptr;
     BinaryTree* stack=nullptr;
     CreatBinaryTree(binarytree,stack,str);
+
+    cout<<"recursion_preorder traversal: ";
     recursion_pre_traverse(binarytree);
-    cout<<endl;
+    cout<<endl<<"recursion_inorder traversal: ";
     recursion_mid_traverse(binarytree);
-    cout<<endl;
+    cout<<endl<<"recursion_postorder traversal: ";
     recursion_pos_traverse(binarytree);
-    cout<<endl;
+
+    cout<<endl<<"norecursion_preorder traversal: ";
     pre_traverse(binarytree,stack);
+    cout<<"norecursion_inorder traversal: ";
     med_traverse(binarytree,stack);
+    cout<<"norecursion_postorder traversal: ";
     pos_traverse(binarytree,stack);
     system("pause");
 }
