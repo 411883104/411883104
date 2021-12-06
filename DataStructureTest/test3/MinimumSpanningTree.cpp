@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-03 15:28:50
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-05 17:29:04
+ * @LastEditTime: 2021-12-06 15:05:50
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\MinimumSpanningTree.cpp
  */
@@ -10,13 +10,16 @@
 #include<iostream>
 using namespace std;
 
-struct MatrixGraph{
-    int** matrix;//邻接矩阵
-    int n;//顶点数
-    int e;//边数
+//图的邻接矩阵存储方式
+struct MatrixGraph{ 
+    int** matrix;   //邻接矩阵
+    int n;          //顶点数
+    int e;          //边数
 
+    //初始化图
     MatrixGraph(int n){
         this->n=n;
+        //动态分配二维数组
         matrix=new int*[n];
         for(int i=0;i<n;i++)
             matrix[i]=new int[n];
@@ -24,18 +27,24 @@ struct MatrixGraph{
     }
 };
 
-struct MinSpanTreeNode{
-    int v1,v2;//边的两个顶点
-    int weight; 
+struct MinSpanTreeNode{   //最小生成树存储方式
+    int v1,v2;            //边的两个顶点
+    int weight;           //两顶点间的边的权值
 };
 
-struct MinSpanTree{
-    MinSpanTreeNode* edge;
-    int n;//节点个数
-    int e;
+struct MinSpanTree{       //最小生成树
+    MinSpanTreeNode* edge;//最小生成树的边，用数组存储
+    int n;                //节点个数
+    int e;                //最小生成树的边数
 };
 
-
+/**
+ * @description: Prim构造最小生成树
+ * @param {MatrixGraph} graph 图的邻接矩阵
+ * @param {MinSpanTree} &minspantree_prim 最小生成树
+ * @param {int} v  最开始往最小生成树添加的顶点
+ * @return {*}
+ */
 void prim(MatrixGraph graph,MinSpanTree &minspantree_prim,int v){
 
     minspantree_prim.edge=new MinSpanTreeNode[graph.n];//n-1条边
@@ -185,13 +194,13 @@ int main(){
             }
         }
     }
-    for(int i=0;i<num;i++){
-        cout<<kruskalEdge[i].weight<<endl;
-    }
+    // for(int i=0;i<num;i++){
+    //     cout<<kruskalEdge[i].weight<<endl;
+    // }
     sortEdge(kruskalEdge,num);
-    for(int i=0;i<num;i++){
-        cout<<kruskalEdge[i].weight<<endl;
-    }
+    // for(int i=0;i<num;i++){
+    //     cout<<kruskalEdge[i].weight<<endl;
+    // }
 
     MinSpanTree minspantree_kruskal;
     kruskal(minspantree_kruskal,kruskalEdge,graph);

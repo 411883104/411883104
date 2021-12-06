@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-02 19:29:05
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-05 17:17:00
+ * @LastEditTime: 2021-12-06 14:47:27
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\traverseGraph.cpp
  */
@@ -10,22 +10,30 @@
 using namespace std;
 
 
-struct EdgeNode{//邻接表边类型
-    int v;//节点
-    int weight;
+//图的邻接表存储方式
+struct EdgeNode{   //邻接表边类型
+    int v;         //与该边相邻的节点
+    int weight;    //边的权值
     EdgeNode* next;//下一条边
 };
-struct VertexNode{//邻接表顶点
-    char data;
-    EdgeNode* edge;
+struct VertexNode{ //邻接表顶点
+    char data;     //顶点的数据类型
+    EdgeNode* edge;//与该点相连的边
 };
-struct AdjacecyListGraph{
-    VertexNode* AdjacecyList;
-    int n;
-    int e;
+struct AdjacecyListGraph{    //图的邻接表
+    VertexNode* AdjacecyList;//节点，数组存储
+    int n;                   //节点数
+    int e;                   //边数
 };
 
-int vis[7]={0,0,0,0,0,0,0};
+
+int vis[7]={0,0,0,0,0,0,0};  //标记是否访问过该节点
+/**
+ * @description: 深度优先搜索遍历图
+ * @param {AdjacecyListGraph} adjacecylistgraph 图的邻接表
+ * @param {int} v 起始节点
+ * @return {*}
+ */
 void dfs(AdjacecyListGraph adjacecylistgraph,int v){
     EdgeNode* p=adjacecylistgraph.AdjacecyList[v].edge;
     cout<<v<<" ";
@@ -40,22 +48,22 @@ void dfs(AdjacecyListGraph adjacecylistgraph,int v){
 
 //队列节点
 struct Node{
-    int v;//节点数据
-    Node* next;
+    int v;      //节点数据
+    Node* next; //指针域
 };
 
-//队列
-struct Queue{
-    Node* head;
-    Node* tail;
+
+struct Queue{   //队列
+    Node* head; //头指针
+    Node* tail; //尾指针
 };
 
-void init(Queue* &queue){
+void init(Queue* &queue){      //初始化队列
     queue->head=queue->tail=new Node();
     queue->tail->next=nullptr;
 }
 
-void push(Queue* &queue,int v){
+void push(Queue* &queue,int v){ //入队
     Node* node=new Node();
     node->v=v;
     node->next=queue->tail->next;
@@ -63,40 +71,45 @@ void push(Queue* &queue,int v){
     queue->tail=node;
 }
 
-int front(Queue* queue){
-    return queue->head->next->v;
+int front(Queue* queue){         //获取队列的首元节点
+    return queue->head->next->v; //返回顶点
 }
 
-void pop(Queue* &queue){
+void pop(Queue* &queue){       //出队
     if(queue->head->next==queue->tail)
         queue->tail=queue->head;
     else    
         queue->head->next=queue->head->next->next;
 }
 
-
-void bfs(AdjacecyListGraph adjacecylistgraph){
+/**
+ * @description: 广度优先搜索遍历图
+ * @param {AdjacecyListGraph} adjacecylistgraph 图的邻接表
+ * @param {int} v 遍历的起始节点
+ * @return {*}
+ */
+void bfs(AdjacecyListGraph adjacecylistgraph,int v){
     for(int i=0;i<adjacecylistgraph.n;i++){
-        vis[i]=0;
+        vis[i]=0;                               //初始化标记数组
     }
-    Queue* queue=new Queue();
-    init(queue);
+    Queue* queue=new Queue();                 
+    init(queue);                                //初始化队列
     EdgeNode* q=nullptr;
-    q=adjacecylistgraph.AdjacecyList[0].edge;
-    vis[0]=1;
-    cout<<0<<" ";
-    push(queue,0);
-    while(queue->head!=queue->tail){
-        q=adjacecylistgraph.AdjacecyList[front(queue)].edge;
-        while(q){
+    q=adjacecylistgraph.AdjacecyList[v].edge;   //q指向第一个节点的相邻节点
+    cout<<v<<" ";                   //输出第一个顶点
+    push(queue,v);                  //第一个顶点入队
+    vis[v]=1;                       //标记顶点
+    while(queue->head!=queue->tail){//队列非空则取出顶点
+        q=adjacecylistgraph.AdjacecyList[front(queue)].edge; //q指向队首元素顶点的相邻节点
+        while(q){                   //遍历与队首元素相邻的所有节点
             if(vis[q->v]==0){
                 cout<<q->v<<" ";
-                push(queue,q->v);
-                vis[q->v]=1;
+                push(queue,q->v);   //与队首元素相邻的节点入队
+                vis[q->v]=1;        //入队后标记为已访问
             }
             q=q->next;
         }
-        pop(queue);
+        pop(queue);//队首元素出队
     }
 }
 
@@ -139,6 +152,7 @@ int main()
         adjcecylistgraph.AdjacecyList[i].edge=nullptr;
         adjcecylistgraph.AdjacecyList[i].data='0'+i;
     }
+    //初始化邻接表
     for(int i=0;i<adjcecylistgraph.n;i++)
         while(cin>>m>>w&&w!=-1){
             EdgeNode* n=new EdgeNode();
@@ -149,6 +163,7 @@ int main()
             adjcecylistgraph.e++;
         }
     EdgeNode* p;
+    //输出邻接表
     for(int i=0;i<adjcecylistgraph.n;i++){
         p=adjcecylistgraph.AdjacecyList[i].edge;
         cout<<adjcecylistgraph.AdjacecyList[i].data<<": ";
@@ -160,11 +175,12 @@ int main()
     }
 
     cout<<"dfs: ";
-    dfs(adjcecylistgraph,0);
-
+    dfs(adjcecylistgraph,0); //从0顶点开始深度优先搜索
     cout<<endl;
+
     cout<<"bfs: ";
-    bfs(adjcecylistgraph);
+    bfs(adjcecylistgraph,0);//从0顶点开始广度优先搜索
+    cout<<endl;
 
     system("pause");
 }
