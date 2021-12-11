@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-29 14:27:17
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-06 14:17:15
+ * @LastEditTime: 2021-12-11 14:27:31
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\Graph.cpp
  */
@@ -44,17 +44,28 @@ struct AdjacecyListGraph{    //图的邻接表
     int e;                   //边数
 };
 
-
+int graphinfo[9][3]={
+    0,1,28,
+    0,5,10,
+    1,2,16,
+    1,6,14,
+    2,3,12,
+    6,3,18,
+    3,4,22,
+    6,4,24,
+    4,5,25};
 
 int main()
 {
-
     //邻接矩阵
     MatrixGraph graph(7);
     for(int i=0;i<graph.n;i++){
         for(int j=0;j<graph.n;j++)
             graph.matrix[i][j]=0xffffffff;//初始化为最大值
     }
+    int n,m,w;//节点，节点，边权值
+
+    //通过输入图节点和边构造邻接矩阵
     /*
     0 1 28
     0 5 10
@@ -67,16 +78,36 @@ int main()
     4 5 25
     0 0 0
     */
-    int n,m,w;
-    while(cin>>n>>m>>w&&w!=0){     //输入邻接矩阵的节点和对应边
+    // while(cin>>n>>m>>w&&w!=0){     //输入邻接矩阵的节点和对应边
+    //     graph.matrix[n][m]=graph.matrix[m][n]=w;
+    // }
+    
+    //通过graphinfo数组构造邻接矩阵
+    for(int i=0;i<9;i++){
+        n=graphinfo[i][0];
+        m=graphinfo[i][1];
+        w=graphinfo[i][2];
         graph.matrix[n][m]=graph.matrix[m][n]=w;
     }
+    cout<<"AdjcecyMatrix:"<<endl;
+    //输出邻接矩阵
     for(int i=0;i<graph.n;i++){
         for(int j=0;j<graph.n;j++)
             cout<<graph.matrix[i][j]<<" ";
         cout<<endl;
     }
 
+    //邻接表
+    AdjacecyListGraph adjacecylistgraph;
+    adjacecylistgraph.AdjacecyList=new VertexNode[7];//图的顶点
+    adjacecylistgraph.n=7;                           //图顶点个数
+    adjacecylistgraph.e=0;                           //边数
+    for(int i=0;i<adjacecylistgraph.n;i++){          //初始化邻接表
+        adjacecylistgraph.AdjacecyList[i].edge=nullptr;
+        adjacecylistgraph.AdjacecyList[i].data='0'+i;//节点信息
+    }
+
+    //输入邻接表信息
     /*
     1 28
     5 10
@@ -104,37 +135,50 @@ int main()
     4 24
     -1 -1
     */
-
-    //邻接表
-    AdjacecyListGraph adjcecylistgraph;
-    adjcecylistgraph.AdjacecyList=new VertexNode[7];//图的顶点
-    adjcecylistgraph.n=7;                           //图顶点个数
-    adjcecylistgraph.e=0;                           //边数
-    for(int i=0;i<adjcecylistgraph.n;i++){          //初始化邻接表
-        adjcecylistgraph.AdjacecyList[i].edge=nullptr;
-        adjcecylistgraph.AdjacecyList[i].data='0'+i;
+    // for(int i=0;i<adjacecylistgraph.n;i++)
+    //     while(cin>>m>>w&&w!=-1){                   //输入邻接表
+    //         EdgeNode* n=new EdgeNode();
+    //         n->v=m;
+    //         n->weight=w;
+    //         n->next=adjacecylistgraph.AdjacecyList[i].edge;
+    //         adjacecylistgraph.AdjacecyList[i].edge=n;
+    //         adjacecylistgraph.e++;
+    //     }
+    
+    //通过graphinfo数组构造邻接表
+    EdgeNode* node=nullptr;
+    for(int i=0;i<9;i++){
+        n=graphinfo[i][0];
+        m=graphinfo[i][1];
+        w=graphinfo[i][2];
+        //输入以n为顶点的节点
+        node=new EdgeNode();
+        node->v=m;
+        node->weight=w;
+        //头插法插入节点
+        node->next=adjacecylistgraph.AdjacecyList[n].edge;
+        adjacecylistgraph.AdjacecyList[n].edge=node;
+        //输入以m为顶点的节点
+        node=new EdgeNode();
+        node->v=n;
+        node->weight=w;
+        node->next=adjacecylistgraph.AdjacecyList[m].edge;
+        adjacecylistgraph.AdjacecyList[m].edge=node;
+        
+        adjacecylistgraph.e++;//两个顶点间为一条边
     }
-    for(int i=0;i<adjcecylistgraph.n;i++)
-        while(cin>>m>>w&&w!=-1){                   //输入邻接表
-            EdgeNode* n=new EdgeNode();
-            n->v=m;
-            n->weight=w;
-            n->next=adjcecylistgraph.AdjacecyList[i].edge;
-            adjcecylistgraph.AdjacecyList[i].edge=n;
-            adjcecylistgraph.e++;
-        }
     EdgeNode* p;
+    cout<<endl<<"AdjacecyList:"<<endl;
     //输出邻接表
-    for(int i=0;i<adjcecylistgraph.n;i++){
-        p=adjcecylistgraph.AdjacecyList[i].edge;
-        cout<<adjcecylistgraph.AdjacecyList[i].data<<": ";//邻接表的顶点
+    for(int i=0;i<adjacecylistgraph.n;i++){
+        p=adjacecylistgraph.AdjacecyList[i].edge;//邻接表顶点对应的第一条边
+        cout<<adjacecylistgraph.AdjacecyList[i].data<<": ";//邻接表的顶点
         while(p){
-            cout<<p->v<<" "; //邻接表相邻的顶点
+            cout<<p->v<<"("<<p->weight<<")"<<" "; //邻接表与顶点相邻的节点
             p=p->next;
         }
         cout<<endl;
     }
-    
 
     system("pause");
 }

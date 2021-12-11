@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\test1",
-    "\\test2"
+    "\\test2",
+    "\\test3"
   ],
-  "SelectedNode": "\\test2\\ThreadBinaryTree.cpp",
+  "SelectedNode": "\\test3\\MinimumSpanningTree.cpp",
   "PreviewInSolutionExplorer": false
 }

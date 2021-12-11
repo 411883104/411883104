@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-02 19:29:05
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-06 14:47:27
+ * @LastEditTime: 2021-12-11 14:39:00
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\traverseGraph.cpp
  */
@@ -113,36 +113,21 @@ void bfs(AdjacecyListGraph adjacecylistgraph,int v){
     }
 }
 
+//图的节点和边的数据
+int graphinfo[9][3]={
+    0,1,28,
+    0,5,10,
+    1,2,16,
+    1,6,14,
+    2,3,12,
+    6,3,18,
+    3,4,22,
+    6,4,24,
+    4,5,25};
+
 int main()
 {
-    /*
-    1 28
-    5 10
-    -1 -1
-    2 16
-    6 14
-    0 28
-    -1 -1
-    3 12
-    1 16
-    -1 -1
-    6 18
-    4 22
-    2 12
-    -1 -1
-    5 25
-    3 22
-    6 24
-    -1 -1
-    0 10
-    4 25
-    -1 -1
-    1 14
-    3 18
-    4 24
-    -1 -1
-    */
-    int m,w;
+    int n,m,w;
     //邻接表
     AdjacecyListGraph adjcecylistgraph;
     adjcecylistgraph.AdjacecyList=new VertexNode[7];
@@ -152,34 +137,47 @@ int main()
         adjcecylistgraph.AdjacecyList[i].edge=nullptr;
         adjcecylistgraph.AdjacecyList[i].data='0'+i;
     }
-    //初始化邻接表
-    for(int i=0;i<adjcecylistgraph.n;i++)
-        while(cin>>m>>w&&w!=-1){
-            EdgeNode* n=new EdgeNode();
-            n->v=m;
-            n->weight=w;
-            n->next=adjcecylistgraph.AdjacecyList[i].edge;
-            adjcecylistgraph.AdjacecyList[i].edge=n;
-            adjcecylistgraph.e++;
-        }
+    //通过graphinfo数组构造邻接表
+    EdgeNode* node=nullptr;
+    for(int i=0;i<9;i++){
+        n=graphinfo[i][0];
+        m=graphinfo[i][1];
+        w=graphinfo[i][2];
+        //输入以n为顶点的节点
+        node=new EdgeNode();
+        node->v=m;
+        node->weight=w;
+        //头插法插入节点
+        node->next=adjcecylistgraph.AdjacecyList[n].edge;
+        adjcecylistgraph.AdjacecyList[n].edge=node;
+        //输入以m为顶点的节点
+        node=new EdgeNode();
+        node->v=n;
+        node->weight=w;
+        node->next=adjcecylistgraph.AdjacecyList[m].edge;
+        adjcecylistgraph.AdjacecyList[m].edge=node;
+        
+        adjcecylistgraph.e++;//两个顶点间为一条边
+    }
     EdgeNode* p;
     //输出邻接表
+    cout<<"AdjacecyList:"<<endl;
     for(int i=0;i<adjcecylistgraph.n;i++){
         p=adjcecylistgraph.AdjacecyList[i].edge;
         cout<<adjcecylistgraph.AdjacecyList[i].data<<": ";
         while(p){
-            cout<<p->v<<" ";
+            cout<<p->v<<"("<<p->weight<<")"<<" "; //邻接表与顶点相邻的节点
             p=p->next;
         }
         cout<<endl;
     }
 
-    cout<<"dfs: ";
+    cout<<endl<<"dfs: ";
     dfs(adjcecylistgraph,0); //从0顶点开始深度优先搜索
     cout<<endl;
 
     cout<<"bfs: ";
-    bfs(adjcecylistgraph,0);//从0顶点开始广度优先搜索
+    bfs(adjcecylistgraph,3);//从0顶点开始广度优先搜索
     cout<<endl;
 
     system("pause");
