@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-11-13 13:29:10
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-11 17:57:19
+ * @LastEditTime: 2021-12-12 14:45:46
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test1\Maze.cpp
  */
@@ -96,7 +96,8 @@ void bfs(int x, int y,int end_x,int end_y)
     now->y=y;
     now->pre=nullptr;
 
-    push(queue,now);//第一个节点入队
+    if(map[now->x][now->y]=='1')
+        push(queue,now);//第一个节点入队
 
     while (!empty(queue))
     {
@@ -159,12 +160,12 @@ int main()
     //     cout << endl;
     // }
     
-    if(now->x!=8&&now->y!=8){//没有到达终点
-        cout<<"Not Found!"<<endl;
-    }
-    else{
+    if((now->x==8)&&(now->y==8)){//没有到达终点
         cout<<"Path:"<<endl;
         printPath(now);
+    }
+    else{
+        cout<<"Not Path!"<<endl;
     }
     system("pause");
 }

@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-02 19:29:05
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-11 14:39:00
+ * @LastEditTime: 2021-12-12 14:05:14
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\traverseGraph.cpp
  */
@@ -177,7 +177,7 @@ int main()
     cout<<endl;
 
     cout<<"bfs: ";
-    bfs(adjcecylistgraph,3);//从0顶点开始广度优先搜索
+    bfs(adjcecylistgraph,0);//从0顶点开始广度优先搜索
     cout<<endl;
 
     system("pause");

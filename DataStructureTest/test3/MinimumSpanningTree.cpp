@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-03 15:28:50
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-11 19:47:45
+ * @LastEditTime: 2021-12-12 14:12:17
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test3\MinimumSpanningTree.cpp
  */
@@ -125,7 +125,7 @@ int find(int x,int flagNode[]){
     if(x==flagNode[x]) //相等则是根节点
         return x;
     else{//不相等则寻找其根节点
-        return flagNode[x]=find(flagNode[x],flagNode);//路径压缩，让每一个节点都直接对应其祖先
+        return flagNode[x]=find(flagNode[x],flagNode);//路径压缩，让每一个节点都直接对应其根节点
     }
 }
 
