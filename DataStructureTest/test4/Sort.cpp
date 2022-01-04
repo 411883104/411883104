@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-13 13:57:15
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-26 16:02:24
+ * @LastEditTime: 2021-12-26 18:29:05
  * @Description: 排序算法实现
  * 1、数组长度16
  * 2、数组元素类int
@@ -412,10 +412,13 @@ int main()
     //ShellSort(arr);
     //SelectSort(arr);
     //BubbleSort(arr);
+
     QuickSort(arr,0,c-1);
     cout << "关键字比较次数:" << QuickSortCountContrast << " 移动次数:" << QuickSortCountMove << endl;
+    
     //HeapSort(arr);
     //cout << "关键字比较次数:" << HeapSortCountContrast << " 移动次数:" << HeapSortCountMove << endl;
+    
     //MergeSort(arr,0,c-1);
     //cout << "关键字比较次数:" << MergeSortCountContrast << " 移动次数:" << MergeSortCountMove << endl;
 

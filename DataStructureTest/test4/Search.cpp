@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2021-12-20 13:59:20
  * @LastEditors: Outsider
- * @LastEditTime: 2021-12-26 16:46:51
+ * @LastEditTime: 2021-12-26 18:28:52
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\test4\Search.cpp
  */
@@ -54,9 +54,12 @@ int SequenceSearch(char arr[], char target) {
  */
 int BinarySearch(char arr[], char targer) {
     int left = 0, right = c - 1;
+    int count=0;//记录比较次数
     while (left <= right) {
         int mid = (left + right) / 2;
+        count++;
         if (arr[mid] == targer) {//查找成功
+            cout<<"比较次数: "<<count<<endl;
             return mid;
         }
         else {
@@ -66,6 +69,7 @@ int BinarySearch(char arr[], char targer) {
                 left = mid + 1; //向右缩小查找范围
         }
     }
+    cout<<"比较次数: "<<count<<endl;
     return 0; //查找失败返回0
 }
 
@@ -121,7 +125,8 @@ int main() {
     for (int i = 1; i < c; i++) {
         cout << arr[i] << " ";
     }
-    cout << endl<<"BinarySearch: " << BinarySearch(arr, target) << endl;
+    cout <<endl;
+    cout<<"BinarySearch: " << BinarySearch(arr, target) << endl;
     
     system("pause");
 }
