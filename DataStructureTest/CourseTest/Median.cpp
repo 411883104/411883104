@@ -2,13 +2,16 @@
  * @Author: Outsider
  * @Date: 2022-01-04 10:53:56
  * @LastEditors: Outsider
- * @LastEditTime: 2022-01-04 21:36:04
+ * @LastEditTime: 2022-01-05 11:46:54
  * @Description: In User Settings Edit
  * @FilePath: \DataStructureTest\CourseTest\Median.cpp
  */
 
 
 #include<iostream>
+#include<thread>
+#include<stdlib.h>
+#include<ctime>
 
 using namespace std;
 
@@ -169,6 +172,8 @@ void swap(int& a,int& b)
 
 
 
+
+
 /**
  * @description: 
  * 定义一个优先队列，内部使用动态分配内存实现数组存数
@@ -262,7 +267,7 @@ void MinHeap::Float(int k)
 MinHeap::MinHeap()
 {
     length=0;
-    max_length=100;
+    max_length=100000;
     arr=new int[max_length];
 }
 
@@ -318,15 +323,13 @@ int& MinHeap::top()
 }
 
 
+
+
 class MedianHolder{
 public:
     MaxHeap maxHeap;
     MinHeap minHeap;
 public:
-    MedianHolder(){
-
-    }
-
     void addNum(int num) {
         if(maxHeap.size()==0||num<=maxHeap.top())
         {
@@ -335,7 +338,7 @@ public:
                     minHeap.push_back(maxHeap.top());
                     maxHeap.pop_back();
                 }
-        } 
+        }
         else {
             minHeap.push_back(num);
             if (minHeap.size() > maxHeap.size()) {
@@ -352,99 +355,34 @@ public:
         }
         return (minHeap.top()+maxHeap.top())/2.0;
     }
-
 };
 
 int main()
 {
-
     MedianHolder medianHolder;
-    medianHolder.addNum(3);
-    medianHolder.addNum(4);
-    medianHolder.addNum(6);
-    medianHolder.addNum(6);
-    medianHolder.addNum(0);
-    medianHolder.addNum(9);
-    medianHolder.addNum(7);
-    medianHolder.addNum(10);
-    medianHolder.addNum(6);
-    medianHolder.addNum(86);
-    medianHolder.addNum(-8);
+
+    time_t tt;
+    srand((unsigned)time(&tt));
+    // thread t(&MedianHolder::addNum,medianHolder,rand()%100);
+    // t.detach();
     
-
-    cout<<medianHolder.findMedian()<<endl;
-    for(int i=0;i<medianHolder.maxHeap.size();i++){
-        cout<<medianHolder.maxHeap[i]<<" ";
+    char x;
+    while(cin>>x&&x!='q'){
+        for(int i=0;i<rand()%20;i++){
+            medianHolder.addNum(rand()%1000);
+        }
+        cout<<"MaxHeap: ";
+        for(int i=0;i<medianHolder.maxHeap.size();i++){
+            cout<<medianHolder.maxHeap[i]<<" ";
+        }
+        cout<<endl;
+        cout<<"MinHeap: ";
+        for(int i=0;i<medianHolder.minHeap.size();i++){
+            cout<<medianHolder.minHeap[i]<<" ";
+        }
+        cout<<endl;
+        cout<<"Median: "<<medianHolder.findMedian()<<endl;
     }
-    cout<<endl;
-    for(int i=0;i<medianHolder.minHeap.size();i++){
-        cout<<medianHolder.minHeap[i]<<" ";
-    }
-
-    // MaxHeap maxheap;
-    // maxheap.push_back(4);
-    // maxheap.push_back(6);
-    // maxheap.push_back(499);
-    // maxheap.push_back(102);
-    // maxheap.push_back(10);
-    // maxheap.push_back(8);
-    // for(int i=0;i<maxheap.size();i++){
-    //     cout<<maxheap[i]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<maxheap.top()<<endl;
-    // maxheap.pop_back();
-    // for(int i=0;i<maxheap.size();i++){
-    //     cout<<maxheap[i]<<" ";
-    // }
-    // cout<<endl;
-    // maxheap.pop_back();
-    // for(int i=0;i<maxheap.size();i++){
-    //     cout<<maxheap[i]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<maxheap.top()<<endl;
-    // maxheap.pop_back();
-    // cout<<maxheap.top()<<endl;
-    // maxheap.pop_back();
-    // cout<<maxheap.top()<<endl;
-
-
-    // cout<<"----"<<endl;
-
-
-    // MinHeap q;
-   
-    // q.push_back(4);
-    // q.push_back(6);
-    // q.push_back(499);
-    // q.push_back(102);
-    // q.push_back(10);
-    // q.push_back(8);
-    // for(int i=0;i<q.size();i++){
-    //     cout<<q[i]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<q.top()<<endl;
-    // q.pop_back();
-    // for(int i=0;i<q.size();i++){
-    //     cout<<q[i]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<q.top()<<endl;
-    // q.pop_back();
-    // for(int i=0;i<q.size();i++){
-    //     cout<<q[i]<<" ";
-    // }
-    // cout<<endl;
-    // q.pop_back();
-    // for(int i=0;i<q.size();i++){
-    //     cout<<q[i]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<q.top()<<endl;
-    // q.pop_back();
-    // cout<<q.top()<<endl;
-
+    
     system("pause");
 }

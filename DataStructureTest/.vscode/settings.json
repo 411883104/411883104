@@ -32,7 +32,8 @@
         "stdexcept": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "thread": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
