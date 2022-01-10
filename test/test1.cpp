@@ -8,6 +8,20 @@ using namespace std;
 
 int main()
 {
+	int x=91,y=100;
+	int count=0;
+	while(y>0){
+		if(x>100){
+			x-=10;
+			y--;
+			count++;
+		}
+		else{
+			x++;
+		}
+	} 
+	cout<<"count: "<<count<<endl;
+	
 	priority_queue<int>t;
 	t.push(5);
 	t.push(9);
