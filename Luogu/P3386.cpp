@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2022-03-10 21:02:16
  * @LastEditors: Outsider
- * @LastEditTime: 2022-03-11 19:33:33
+ * @LastEditTime: 2022-03-12 14:42:30
  * @Description: In User Settings Edit
  * @FilePath: \C++\Luogu\P3386.cpp
  */
@@ -44,13 +44,18 @@ int main()
     for(int i=0;i<e;i++)
     {
         cin>>u>>v;
+        if(u>n||v>m){
+            continue;
+        }
         arr[u].push_back(v);
     }
     int ans=0;
     for(int i=1;i<=n;i++)
     {
         memset(vis,0,sizeof(vis));
-        ans+=dfs(i);
+        if(dfs(i)){
+            ans++;
+        }
     }
     cout<<ans<<endl;
     system("pause");

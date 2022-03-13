@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2022-03-11 20:21:54
  * @LastEditors: Outsider
- * @LastEditTime: 2022-03-11 20:37:43
+ * @LastEditTime: 2022-03-12 12:16:53
  * @Description: In User Settings Edit
  * @FilePath: \C++\Luogu\P1439.cpp
  */
@@ -12,8 +12,8 @@
 #include<vector>
 
 using namespace std;
-const int c=100005;
-vector<vector<int>> dp(c,vector<int>(c,0));
+const int c=1005;
+int dp[c][c]={0};
 int arr1[c];
 int arr2[c];
 int main()
@@ -36,7 +36,7 @@ int main()
     }
     for(int i=1;i<=n;i++)
     {
-        for(int j=1;j<n;j++)
+        for(int j=1;j<=n;j++)
         {
             if(arr1[i]==arr2[j]){
                 dp[i][j]=dp[i-1][j-1]+1;
