@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "*.m": "matlab",
+        "*.pdf": "tex",
+        "*.flex": "lex",
+        "ostream": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "string_view": "cpp",
+        "iostream": "cpp",
+        "cstdlib": "cpp",
+        "cmath": "cpp",
+        "iomanip": "cpp"
+    }
+}

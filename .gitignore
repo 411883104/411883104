@@ -1,12 +1,8 @@
-# *.exe
-# *.docx
-# *.doc
-# *.pdf
-# *.rar
-# *.zip
-# cmake-build-debug/
-# .idea
-
-*.*
-!*.cpp
-!*.txt
+*/*.exe
+*/*.docx
+*/*.doc
+*/*.pdf
+*/*.rar
+*/*.zip
+*/**/cmake-build-debug/
+*/**/.idea
