@@ -1,3 +1,0 @@
-"D:\Users\LWZ\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Data_Structure.dir/objects.a
-D:\PROGRA~1\GCC\MINGW-~1\mingw64\bin\ar.exe cr CMakeFiles\Data_Structure.dir/objects.a @CMakeFiles\Data_Structure.dir\objects1.rsp
-D:\PROGRA~1\GCC\MINGW-~1\mingw64\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\Data_Structure.dir/objects.a -Wl,--no-whole-archive -o Data_Structure.exe -Wl,--out-implib,libData_Structure.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Data_Structure.dir\linklibs.rsp
