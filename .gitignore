@@ -1,9 +1,8 @@
-.exe
-*/*.exe
-*/*.docx
-*/*.doc
-*/*.pdf
-*/*.rar
-*/*.zip
-*/**/cmake-build-debug/
-*/**/.idea
+*.exe
+*.docx
+*.doc
+*.pdf
+*.rar
+*.zip
+cmake-build-debug
+.idea
