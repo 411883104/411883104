@@ -12,6 +12,7 @@
         "cstdlib": "cpp",
         "cmath": "cpp",
         "iomanip": "cpp",
-        "p2196,cc": "cpp"
+        "p2196,cc": "cpp",
+        "functional": "cpp"
     }
 }
