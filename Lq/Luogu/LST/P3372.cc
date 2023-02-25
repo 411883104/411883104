@@ -2,7 +2,7 @@
  * @Author: Outsider
  * @Date: 2023-01-25 11:08:57
  * @LastEditors: Outsider
- * @LastEditTime: 2023-01-25 18:28:44
+ * @LastEditTime: 2023-02-18 21:26:23
  * @Description: In User Settings Edit
  * @FilePath: \Lq\Luogu\LST\P3372.cc
  */
@@ -17,10 +17,10 @@ int arr[c];
 class LST
 {
 public:
-    long long sum;
+    long long sum; // 区间和
     int left;
     int right;
-    long long add;
+    long long add;// 懒标记
 };
 
 LST tt[4 * c];

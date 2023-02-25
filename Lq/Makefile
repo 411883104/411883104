@@ -4,4 +4,4 @@ clean:
 # cd Luogu/HighPrecision && rm *.exe
 # cd Luogu/DP && rm *.exe
 # cd Luogu/DP/LinearDP && rm *.exe
-	cd Luogu/LST && rm *.exe
+	cd Luogu/BT && del *.exe
