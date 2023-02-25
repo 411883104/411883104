@@ -4,4 +4,6 @@ clean:
 # cd Luogu/HighPrecision && rm *.exe
 # cd Luogu/DP && rm *.exe
 # cd Luogu/DP/LinearDP && rm *.exe
-	cd Luogu/BT && del *.exe
+
+# /S 删除子目录下匹配文件
+	del /S *.exe
