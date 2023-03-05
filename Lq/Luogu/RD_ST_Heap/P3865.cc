@@ -2,16 +2,15 @@
  * @Author       : Outsider
  * @Date         : 2023-03-01 19:14:52
  * @LastEditors  : Outsider
- * @LastEditTime : 2023-03-04 10:13:33
+ * @LastEditTime : 2023-03-02 10:44:38
  * @Description  : In User Settings Edit
- * @FilePath     : \Lq\Luogu\RD_ST_Heap\P2880.cc
+ * @FilePath     : \Lq\Luogu\RD\P2880.cc
  */
 #include <iostream>
 using namespace std;
 
-int a[1005][20];
-int b[1005][20];
-int log[1005];
+int a[100005][20];
+int log[100005];
 int pow[20];
 inline int read()
 {
@@ -36,14 +35,7 @@ int main()
     log[0] = -1;
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < 20; j++)
-        {
-            b[i][j] = 0xffffff;
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        b[i][0] = a[i][0] = read();
+        a[i][0] = read();
         log[i] = log[i >> 1] + 1;
     }
     pow[0] = 1;
@@ -56,7 +48,6 @@ int main()
         for (int i = 1; i + pow[j] - 1 <= n; i++)
         {
             a[i][j] = max(a[i][j - 1], a[i + pow[j - 1]][j - 1]);
-            b[i][j] = min(b[i][j - 1], b[i + pow[j - 1]][j - 1]);
         }
     }
 
@@ -66,7 +57,6 @@ int main()
         ll = read();
         rr = read();
         int len = log[rr - ll + 1];
-        printf("%d\n", max(a[ll][len], a[rr - pow[len] + 1][len]) -
-                           min(b[ll][len], b[rr - pow[len] + 1][len]));
+        printf("%d\n", max(a[ll][len], a[rr - pow[len] + 1][len]));
     }
 }
