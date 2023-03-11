@@ -2,9 +2,9 @@
  * @Author       : Outsider
  * @Date         : 2023-03-05 09:04:58
  * @LastEditors  : Outsider
- * @LastEditTime : 2023-03-05 09:48:19
+ * @LastEditTime : 2023-03-06 16:45:17
  * @Description  : In User Settings Edit
- * @FilePath     : \Lq\Luogu\Graph\P3916.cc
+ * @FilePath     : \Lq\Luogu\Graph\P3916-re.cc
  */
 #include <iostream>
 #include <cstring>
@@ -25,25 +25,18 @@ struct Node
 
 Node G[1005];
 bool check[1005];
-int vis[10005];
-int maxx = 0;
-void dfs(int n)
+int vis[1005];
+void dfs(int n, int maxx)
 {
+    check[n] = true;
+    vis[n] = maxx;
     auto e = G[n].edge;
-    maxx = max(n, maxx);
     while (e)
     {
         if (!check[e->idx])
         {
             check[e->idx] = true;
-            if (vis[e->idx] != 0)
-            {
-                maxx = max(maxx, vis[e->idx]);
-            }
-            else
-            {
-                dfs(e->idx);
-            }
+            dfs(e->idx, maxx);
         }
         e = e->next;
     }
@@ -58,26 +51,18 @@ int main()
     for (int i = 0; i < m; i++)
     {
         scanf("%d%d", &x, &y);
-        Edge* e = new Edge(y);
-        e->next = G[x].edge;
-        G[x].edge = e;
+        Edge* e = new Edge(x);
+        e->next = G[y].edge;
+        G[y].edge = e;
     }
 
+    for (int i = n; i > 0; i--)
+    {
+        if (!check[i]) dfs(i, i);
+    }
     for (int i = 1; i <= n; i++)
     {
-        if (vis[i] != 0)
-        {
-            maxx = vis[i];
-        }
-        else
-        {
-            maxx = 0;
-            memset(check, 0, sizeof(bool) * (n + 1));
-            check[i] = true;
-            dfs(i);
-            vis[i] = maxx;
-        }
-        printf("%d ", maxx);
+        printf("%d ", vis[i]);
     }
     printf("\n");
     return 0;
