@@ -4,6 +4,7 @@ using namespace std;
 
 const int c = 55;
 int dis[c][c];
+bool check[c][c][65];
 int main()
 {
     int n, m;
@@ -21,29 +22,25 @@ int main()
     {
         cin >> u >> v;
         dis[u][v] = 1;
+        check[u][v][0] = true;
     }
 
-    for (int k = 1; k <= n; k++)
+    for (int k = 1; k <= 64; k++)
         for (int i = 1; i <= n; i++)
             for (int j = 1; j <= n; j++)
+                for (int t = 1; t <= n; t++)
+                {
+                    if (check[i][t][k - 1] && check[t][j][k - 1])
+                    {
+                        check[i][j][k] = true;
+                        dis[i][j] = 1;
+                    }
+                }
+
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            for (int k = 1; k <= n; k++)
                 dis[i][j] = min(dis[i][k] + dis[k][j], dis[i][j]);
 
-    dis[1][n]--;
-
-    int ans = 1;
-    int debris = log2(dis[1][n]);
-    dis[1][n] -= (1 << debris);
-    while (dis[1][n])
-    {
-        if ((1 << debris) > dis[1][n])
-        {
-            debris--;
-        }
-        else
-        {
-            ans++;
-            dis[1][n] -= (1 << debris);
-        }
-    }
-    cout << ans << endl;
+    cout << dis[1][n] << endl;
 }

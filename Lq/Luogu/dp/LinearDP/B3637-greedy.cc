@@ -28,25 +28,25 @@ int main()
     int idx = 0;
     for (int i = 0; i < n; i++)
     {
-        int l = 0, r = idx;
-        while (l < r)
+        int ll = 0, rr = idx;
+        while (ll < rr)
         {
-            int mid = l + ((r - l) >> 1);
-            if (dp[mid] == arr[i])
+            int mm = ll + ((rr - ll) >> 1);
+            if (dp[mm] == arr[i])
             {
-                l = r = mid;
+                rr = mm;
             }
-            else if (dp[mid] < arr[i])
+            else if (dp[mm] < arr[i])
             {
-                l = mid + 1;
+                ll = mm + 1;
             }
-            else if (dp[mid] > arr[i])
+            else if (dp[mm] > arr[i])
             {
-                r = mid;
+                rr = mm;
             }
         }
-        dp[l] = arr[i];
-        if (l == idx)
+        dp[ll] = arr[i];
+        if (ll == idx)
         {
             idx++;
         }
