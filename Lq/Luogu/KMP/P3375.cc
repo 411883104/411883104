@@ -25,7 +25,7 @@ int main()
             k = nextval[k];
         }
     }
-    j = 1;
+    j = 0;
     while (i <= a.size())
     {
         if (j == 0 || a[i - 1] == b[j - 1])
