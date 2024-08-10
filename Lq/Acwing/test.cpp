@@ -1,15 +1,24 @@
 #include<iostream>
-#include<vector>
+#include<map>
+#include<list>
+
 using namespace std;
-vector<int>a;
-int b[10];
-int main()
-{
-	string s="weee";
-	a.push_back(1);
-	a.push_back(4);
-	b[1]=3;
-	b[5]=5;
-	cout<<s<<endl;
-	cout<<a[1]<<endl;
-}
+
+int main(){
+	list<int>l;
+	l.push_back(5);
+	l.push_back(3);
+	l.push_back(2);
+	l.push_back(8);
+	l.push_back(0);
+	l.push_back(7);l.push_back(5);l.push_back(5);
+	for(auto n:l){
+		cout<<n<<" ";
+	}
+	cout<<endl;
+	l.remove(5);
+	for(auto n:l){
+		cout<<n<<" ";
+	}
+	cout<<endl;
+} 

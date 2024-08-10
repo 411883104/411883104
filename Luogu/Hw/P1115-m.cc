@@ -2,32 +2,34 @@
  * @Author       : Outsider
  * @Date         : 2023-04-23 19:23:09
  * @LastEditors  : Outsider
- * @LastEditTime : 2023-04-24 09:37:27
+ * @LastEditTime : 2023-04-24 09:33:30
  * @Description  : In User Settings Edit
- * @FilePath     : \Luogu\Hw\P1115.cc
+ * @FilePath     : \Luogu\Hw\P1115-m.cc
  */
 #include <iostream>
 using namespace std;
 
 int a[200005];
-int b[200005]; // 前缀和
 
 int main()
 {
     int n;
     cin >> n;
-    int maxx = 0xfffffff;
+    int maxx = -0xfffffff;
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
-        b[i] = b[i - 1] + a[i];
-        maxx = min(maxx, a[i]); // 记录最小值
     }
-    for (int i = 0; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < i; j++)
+        for (int j = 1; j < i; j++) // 枚举子区间
         {
-            maxx = max(maxx, b[i] - b[j]);
+            int sum = 0;
+            for (int k = j; k <= i; k++)
+            {
+                sum += a[k]; // 求子区间和
+            }
+            maxx = max(maxx, sum);
         }
     }
     cout << maxx << endl;
